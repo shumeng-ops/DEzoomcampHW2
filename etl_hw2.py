@@ -1,6 +1,6 @@
 from pathlib import Path
 import pandas as pd
-from prefect import flow, task
+from prefect import flow, task, get_run_logger
 from prefect_gcp.cloud_storage import GcsBucket
 
 @task()
@@ -22,7 +22,8 @@ def write_local(df:pd.DataFrame, color:str, dataset_file:str) -> Path:
     path = Path(f"{dataset_file}.parquet")
     path_full = Path(f"data/{color}/{path}")
     df.to_parquet(path, compression='gzip')
-    print(f"len of df {len(df)}")
+    logger = get_run_logger()
+    logger.info(f"len of df {len(df)}")
     return path, path_full
 
 @task()
