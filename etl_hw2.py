@@ -22,7 +22,7 @@ def write_local(df:pd.DataFrame, color:str, dataset_file:str) -> Path:
     path = Path(f"{dataset_file}.parquet")
     path_full = Path(f"data/{color}/{path}")
     df.to_parquet(path, compression='gzip')
-    print(f"len of df {len(df)}"))
+    print(f"len of df {len(df)}")
     return path, path_full
 
 @task()
